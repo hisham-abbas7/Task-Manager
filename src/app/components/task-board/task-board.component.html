@@ -1,0 +1,27 @@
+<div class="board">
+  <div class="column" *ngFor="let column of columns" [ngClass]="column">
+    <h3>{{ column | titlecase }}</h3>
+
+    <button mat-raised-button color="primary" (click)="addTask(column)">Add Task</button>
+
+    <div
+      cdkDropList
+      [id]="column"
+      [cdkDropListData]="tasks[column]"
+      [cdkDropListConnectedTo]="getConnectedColumns(column)"
+      (cdkDropListDropped)="onDrop($event, column)"
+      class="task-list"
+    >
+    <div
+      class="task-card"
+      *ngFor="let task of tasks[column]; let i = index"
+      cdkDrag
+      [@taskMove]
+    >
+      <span>{{ task }}</span>
+      <button class="delete-btn" (click)="deleteTask(column, i)">✖</button>
+    </div>
+  
+    </div>
+  </div>
+</div>
